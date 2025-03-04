@@ -48,14 +48,14 @@ class BookingController extends Controller
         try {
             $exists = Booking::where('booking_date', $request->booking_date)
                 ->where(function ($query) use ($request) {
-                    if ($request->booking_type == 'full_day') {
-                        $query->where('booking_type', '!=', 'custom');
-                    } elseif ($request->booking_type == 'half_day') {
-                        $query->where('booking_type', 'full_day')
+                    if ($request->booking_type == 'Full Day') {
+                        $query->where('booking_type', '!=', 'Custom');
+                    } elseif ($request->booking_type == 'Half Day') {
+                        $query->where('booking_type', 'Full Day')
                             ->orWhere('booking_slot', $request->booking_slot);
-                    } elseif ($request->booking_type == 'custom') {
-                        $query->where('booking_type', 'full_day')
-                            ->orWhere('booking_slot', 'first_half')
+                    } elseif ($request->booking_type == 'Custom') {
+                        $query->where('booking_type', 'Full Day')
+                            ->orWhere('booking_slot', 'First Half')
                             ->orWhereBetween('booking_from', [$request->booking_from, $request->booking_to]);
                     }
                 })->exists();
